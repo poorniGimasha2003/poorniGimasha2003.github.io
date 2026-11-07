@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poorni Pathirage · Computer Engineering</title>
+<meta name="description" content="Poorni Pathirage — Computer Engineering undergraduate at the University of Sri Jayewardenepura, working on structural pruning of neural networks, ML and IoT projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f7f3ec; --paper2:#efe8dc; --card:#fffdf9; --ink:#24333a; --soft:#5d6b70; --line:#e2d9ca;
+  --green:#2f6b55; --green-l:#e3eee8; --clay:#c46a3f; --clay-l:#f6e6dc;
+  --r:16px; --shadow:0 1px 2px rgba(36,51,58,.06),0 6px 20px rgba(36,51,58,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:"DM Sans",system-ui,sans-serif;line-height:1.65;font-size:16.5px}
+a{color:inherit}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:650;line-height:1.2;letter-spacing:-.01em}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+section{padding:84px 0}
+.label{font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--clay)}
+.title{font-size:clamp(1.8rem,3.4vw,2.4rem);margin:6px 0 14px}
+.lead{color:var(--soft);max-width:620px;margin-bottom:36px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:10px;font-weight:500;font-size:.95rem;text-decoration:none;border:1px solid var(--ink);cursor:pointer;background:none;font-family:inherit;color:var(--ink);transition:.2s}
+.btn:hover{transform:translateY(-2px)}
+.btn svg{flex-shrink:0}
+.btn.solid{background:var(--green);border-color:var(--green);color:#fff}
+.btn.solid:hover{background:#245442}
+.tag{display:inline-block;font-size:.78rem;padding:3px 10px;border-radius:999px;background:var(--paper2);color:var(--soft);margin:3px 4px 0 0}
+.fade{opacity:0;transform:translateY(18px);transition:.7s ease}
+.fade.in{opacity:1;transform:none}
+
+/* photo placeholder */
+.ph{position:relative;background:repeating-linear-gradient(45deg,var(--paper2),var(--paper2) 10px,#ebe3d5 10px,#ebe3d5 20px);overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph .hint{display:none;font-size:.75rem;color:var(--soft);padding:10px;line-height:1.4}
+.ph.empty .hint{display:block}
+.ph .hint code{display:block;margin-top:4px;font-size:.7rem;color:var(--clay);word-break:break-all}
+
+/* nav */
+nav{position:sticky;top:0;z-index:40;background:rgba(247,243,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid transparent;transition:.2s}
+nav.sc{border-color:var(--line)}
+nav .wrap{display:flex;justify-content:space-between;align-items:center;height:64px}
+.brand{font-family:Fraunces;font-weight:650;font-size:1.15rem;text-decoration:none}
+.brand span{color:var(--clay)}
+.links{display:flex;gap:26px;font-size:.93rem}
+.links a{text-decoration:none;color:var(--soft);position:relative}
+.links a:hover,.links a.on{color:var(--ink)}
+.links a.on::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--clay);border-radius:2px}
+#burger{display:none;background:none;border:0;font-size:1.5rem;cursor:pointer;color:var(--ink)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.25fr .9fr;gap:56px;align-items:center;padding:70px 0 60px}
+.hero h1{font-size:clamp(2.4rem,5vw,3.6rem)}
+.hero h1 .u{position:relative;white-space:nowrap}
+.hero h1 .u svg{position:absolute;left:0;bottom:-10px;width:100%;height:14px}
+.hero p{color:var(--soft);font-size:1.08rem;margin:22px 0 28px;max-width:540px}
+.hero .btns{display:flex;gap:12px;flex-wrap:wrap}
+.polaroid{background:#fff;padding:14px 14px 50px;border-radius:6px;box-shadow:0 10px 30px rgba(36,51,58,.14);transform:rotate(2.5deg);transition:transform .4s;width:100%;max-width:360px;margin-left:auto;position:relative}
+.polaroid:hover{transform:rotate(0)}
+.polaroid .ph{aspect-ratio:4/5;border-radius:3px}
+.polaroid .ph img{object-position:center 20%}
+.polaroid figcaption{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-family:Fraunces;color:var(--soft);font-size:.95rem}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:10px}
+.fact{padding:20px 22px}
+.fact small{color:var(--soft);font-size:.8rem;display:block}
+.fact b{font-weight:500}
+
+/* research */
+.research{display:grid;grid-template-columns:1.1fr 1fr;gap:28px}
+.research .card{padding:28px}
+.research ul{list-style:none;margin:14px 0}
+.research li{padding-left:20px;position:relative;margin:8px 0}
+.research li::before{content:"";position:absolute;left:0;top:.65em;width:8px;height:8px;border-radius:50%;background:var(--green)}
+.small{font-size:.8rem;color:var(--soft)}
+
+/* filters */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.filters button{font-family:inherit;font-size:.88rem;padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);cursor:pointer;color:var(--soft);transition:.2s}
+.filters button:hover{border-color:var(--ink);color:var(--ink)}
+.filters button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* projects */
+.grid3{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.pcard{cursor:pointer;overflow:hidden;transition:transform .25s,box-shadow .25s;text-align:left;font:inherit;color:inherit;padding:0}
+.pcard:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(36,51,58,.12)}
+.pcard .ph{aspect-ratio:2/1}
+.pcard .ph img{object-position:center 35%}
+.pcard .body{padding:20px 22px 22px}
+.pcard h3{font-size:1.2rem;margin:4px 0 8px}
+.pcard p{color:var(--soft);font-size:.92rem}
+.pcard .more{display:inline-block;margin-top:12px;font-size:.88rem;font-weight:500;color:var(--green)}
+.pcard.hide{display:none}
+.pfoot{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.pfoot .more{margin-top:0}
+.gh{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:500;text-decoration:none;padding:5px 12px;border-radius:8px;border:1px solid var(--line);background:var(--paper)}
+.gh:hover{border-color:var(--ink)}
+
+/* awards gallery */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.acard{cursor:pointer;overflow:hidden;padding:0;text-align:left;font:inherit;color:inherit;transition:transform .25s,box-shadow .25s}
+.acard:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(36,51,58,.12)}
+.acard .ph{aspect-ratio:4/3}
+.acard .count{position:absolute;right:10px;bottom:10px;background:rgba(36,51,58,.8);color:#fff;font-size:.72rem;padding:3px 9px;border-radius:999px;z-index:2}
+.acard .body{padding:16px 20px 20px}
+.acard .res{display:inline-block;font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:6px;background:var(--green-l);color:var(--green)}
+.acard .res.top{background:var(--clay-l);color:var(--clay)}
+.acard h3{font-size:1.08rem;margin:8px 0 2px}
+.acard small{color:var(--soft)}
+.acard.hide{display:none}
+
+/* modal / lightbox */
+.modal{position:fixed;inset:0;background:rgba(36,51,58,.55);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal.open{display:flex}
+.mbox{background:var(--card);border-radius:18px;max-width:860px;width:100%;max-height:92vh;overflow:auto;position:relative;animation:pop .25s ease}
+@keyframes pop{from{transform:scale(.96);opacity:0}}
+.mclose{position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:50%;border:0;background:var(--paper2);font-size:1.2rem;cursor:pointer;z-index:3;color:var(--ink)}
+.slides{position:relative}
+.slides .ph{aspect-ratio:16/9}
+.slides .ph img{object-fit:contain;background:#efe8dc}
+.slides .ph .hint{font-size:.9rem}
+.nav-btn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.92);cursor:pointer;font-size:1.2rem;z-index:2;box-shadow:var(--shadow);color:var(--ink)}
+.nav-btn.l{left:12px}.nav-btn.r{right:12px}
+.cap{position:absolute;left:16px;bottom:14px;z-index:2;background:rgba(36,51,58,.82);color:#fff;font-size:.8rem;padding:4px 12px;border-radius:999px}
+.thumbs{display:flex;gap:8px;padding:12px 24px 0}
+.thumbs .ph{width:70px;height:50px;border-radius:6px;cursor:pointer;opacity:.55;border:2px solid transparent;flex-shrink:0}
+.thumbs .ph.on{opacity:1;border-color:var(--green)}
+.thumbs .ph .hint{display:none!important}
+.mbody{padding:22px 28px 30px}
+.mbody h3{font-size:1.5rem;margin:6px 0 10px}
+.mbody p{color:var(--soft)}
+.mbody ul{margin:12px 0 0 20px;color:var(--soft)}
+.mbody li{margin:6px 0}
+
+/* other achievements */
+.also{margin-top:34px;padding:24px 26px;border:1px dashed var(--line);border-radius:var(--r)}
+.also h3{font-size:1.1rem;margin-bottom:6px}
+.also-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:12px 0;border-top:1px solid var(--line);margin-top:12px}
+.also .res{font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:6px;background:var(--green-l);color:var(--green)}
+.also .res.top{background:var(--clay-l);color:var(--clay)}
+/* skills */
+.skills{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}
+#orbitBox{height:500px}
+#orbit{width:100%;height:100%;cursor:grab;display:block}
+#orbit:active{cursor:grabbing}
+.sgroup{padding:16px 20px;margin-bottom:12px;cursor:pointer;transition:.2s;border-left:4px solid transparent}
+.sgroup:hover{border-left-color:var(--line)}
+.sgroup.on{border-left-color:var(--clay)}
+.sgroup h4{font-size:.95rem;margin-bottom:4px}
+.chip{display:inline-block;font-size:.8rem;padding:3px 10px;margin:3px 4px 0 0;border-radius:7px;background:var(--paper);border:1px solid var(--line);transition:.2s}
+.chip.hl{background:var(--clay);border-color:var(--clay);color:#fff}
+
+/* certs + contact */
+.certs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.cert{padding:16px 20px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.cert small{color:var(--soft);white-space:nowrap}
+.contact{padding:48px;text-align:center;background:var(--green);color:#fff;border:0}
+.contact p{opacity:.85;max-width:520px;margin:10px auto 26px}
+.contact .btn{border-color:#fff;color:#fff}
+.contact .btn.solid{background:#fff;color:var(--green)}
+footer{text-align:center;padding:30px;color:var(--soft);font-size:.85rem}
+#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,80px);background:var(--ink);color:#fff;padding:10px 20px;border-radius:10px;font-size:.9rem;transition:.3s;z-index:200}
+#toast.show{transform:translate(-50%,0)}
+
+@media(max-width:880px){
+  .links{display:none;position:absolute;top:64px;left:0;right:0;background:var(--paper);flex-direction:column;padding:20px 24px;border-bottom:1px solid var(--line)}
+  .links.open{display:flex}#burger{display:block}
+  .hero,.research,.skills{grid-template-columns:1fr}
+  .polaroid{margin:0 auto}
+  .grid3,.gallery,.facts,.certs{grid-template-columns:1fr}
+  .contact{padding:36px 22px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.fade{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<nav id="nav"><div class="wrap">
+  <a class="brand" href="#top">Poorni<span>.</span></a>
+  <div class="links" id="links">
+    <a href="#research">Research</a><a href="#projects">Projects</a><a href="#awards">Awards</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+  </div>
+  <button id="burger" aria-label="Open menu">☰</button>
+</div></nav>
+
+<!-- HERO -->
+<header class="wrap" id="top">
+  <div class="hero">
+    <div class="fade">
+      <div class="label">Computer Engineering · University of Sri Jayewardenepura</div>
+      <h1 style="margin-top:10px">Hi, I'm <span class="u">Poorni Pathirage<svg viewBox="0 0 300 14" preserveAspectRatio="none"><path d="M2 9 C 60 2, 120 13, 180 6 S 270 4, 298 8" stroke="#c46a3f" stroke-width="3" fill="none" stroke-linecap="round"/></svg></span></h1>
+      <p>I'm a 3rd Year undergraduate interested in deep learning and edge AI. Right now I'm studying how to make neural networks smaller and faster through structural pruning. I also enjoy building IoT and data projects with my team.</p>
+      <div class="btns">
+        <a class="btn solid" href="#projects">See my work</a>
+        <a class="btn" href="cv.pdf" target="_blank">Download CV</a>
+        <button class="btn" id="copyMail">Copy email</button>
+      </div>
+    </div>
+    <figure class="polaroid fade">
+      <div class="ph" data-src="images/profile.jpg" data-hint="Your photo"></div>
+      <figcaption>that's me 👋</figcaption>
+    </figure>
+  </div>
+  <div class="facts fade">
+    <div class="fact card"><small>Studying</small><b>BSc (Hons) Computer Engineering, Minor in Data Management</b></div>
+    <div class="fact card"><small>Current focus</small><b>Structural pruning &amp; model compression</b></div>
+    <div class="fact card"><small>Looking for</small><b>Research or ML / software internships</b></div>
+  </div>
+</header>
+
+<!-- RESEARCH -->
+<section id="research"><div class="wrap">
+  <div class="fade">
+    <div class="label">Current research</div>
+    <h2 class="title">Structural pruning of neural networks</h2>
+    <p class="lead">Individual research project, Oct 2026 – present. I'm evaluating DepGraph (CVPR 2023) and the open-source Torch-Pruning library to see where they work well and where they don't.</p>
+  </div>
+  <div class="research">
+    <div class="card fade">
+      <h3 style="font-size:1.2rem">What the project involves</h3>
+      <ul>
+        <li>Checking which architectures can be pruned: CNNs, RNN/LSTM, Transformers and graph neural networks.</li>
+        <li>Building a PyTorch test harness that records whether pruning succeeds, crashes, or quietly gives wrong outputs.</li>
+        <li>Working towards pruning support for layers like LSTM/GRU, which I hope to contribute to Torch-Pruning.</li>
+        <li>Comparing methods on accuracy, model size and inference latency.</li>
+      </ul>
+      <p class="small">Supervisor: Sanka Mohottala · External supervisors: Mr. Asiri Gawesha (SLIIT), Dr. Dinuka Sahabandu (University of Washington)</p>
+      <div style="margin-top:12px"><span class="tag">PyTorch</span><span class="tag">Torch-Pruning</span><span class="tag">Hugging Face</span><span class="tag">PyTorch Geometric</span></div>
+    </div>
+    <div class="card fade">
+      <h3 style="font-size:1.2rem">In simple words</h3>
+      <p style="color:var(--soft);margin-top:10px">Big neural networks are often too slow for small devices like phones or a Jetson board. Structural pruning removes whole parts of a network (channels, neurons or attention heads) that contribute little, so the model becomes smaller and faster while trying to keep its accuracy.</p>
+      <p style="color:var(--soft);margin-top:12px">The tricky part is that layers depend on each other: remove something in one layer and connected layers must change too. DepGraph tracks these dependencies automatically, and my project tests how reliably it does that across different kinds of networks.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background:var(--paper2)"><div class="wrap">
+  <div class="fade">
+    <div class="label">Projects</div>
+    <h2 class="title">Things I've worked on</h2>
+    <p class="lead">Click a card for details.</p>
+  </div>
+  <div class="filters" id="pFilters"></div>
+  <div class="grid3" id="pGrid"></div>
+</div></section>
+
+<!-- AWARDS -->
+<section id="awards"><div class="wrap">
+  <div class="fade">
+    <div class="label">Awards &amp; competitions</div>
+    <h2 class="title">Competitions &amp; exhibitions</h2>
+    <p class="lead">Competitions and exhibitions, most of them team efforts. Click a card to see photos.</p>
+  </div>
+  <div class="filters" id="aFilters"></div>
+  <div class="gallery" id="aGrid"></div>
+  <div class="also fade">
+    <h3>Also with Project Yuwathi</h3>
+    <p class="small">Yuwathi is a women's safety and support mobile app built by our team, with features like SOS emergency alerts, location sharing that works offline, and legal awareness resources. Built with Flutter and Firebase.</p>
+    <div class="also-row"><span class="res top">Winner</span><b>IdeaPulse 2.0</b><span class="small">Inter-faculty idea pitching competition · 2026</span></div>
+    <div class="also-row"><span class="res">Finalist</span><b>Mobitel CodeBlast Hackathon 2025</b><span class="small">SLT-Mobitel &amp; hSenid Mobile · Top 14 of 100+ teams</span></div>
+  </div>
+</div></section>
+
+<!-- SKILLS -->
+<section id="skills" style="background:var(--paper2)"><div class="wrap">
+  <div class="fade">
+    <div class="label">Skills</div>
+    <h2 class="title">Tools I use</h2>
+    <p class="lead">Drag the sphere to spin it. Click a word or a group to highlight it.</p>
+  </div>
+  <div class="skills">
+    <div id="orbitBox" class="fade"><canvas id="orbit"></canvas></div>
+    <div id="sGroups" class="fade"></div>
+  </div>
+</div></section>
+
+<!-- CERTS -->
+<section id="certs"><div class="wrap">
+  <div class="fade"><div class="label">Certifications</div><h2 class="title" style="margin-bottom:24px">Courses &amp; certificates</h2></div>
+  <div class="certs fade">
+    <div class="cert card"><b>AWS Academy Graduate – Cloud Foundations</b><small>AWS Academy · 2026</small></div>
+    <div class="cert card"><b>SQL (Basic)</b><small>HackerRank</small></div>
+    <div class="cert card"><b>Java Intermediate</b><small>Sololearn</small></div>
+    <div class="cert card"><b>Introduction to Java</b><small>Sololearn</small></div>
+    <div class="cert card"><b>Introduction to Python</b><small>Sololearn</small></div>
+    <div class="cert card"><b>Introduction to C++</b><small>Sololearn</small></div>
+  </div>
+</div></section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding-top:20px"><div class="wrap">
+  <div class="card contact fade">
+    <h2 class="title" style="color:#fff">Let's talk</h2>
+    <p>I'm looking for internship opportunities in machine learning, efficient deep learning or software engineering. I'd be happy to hear from you.</p>
+    <div class="btns" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a class="btn solid" id="mailBtn" href="#">Email me</a>
+      <a class="btn" id="liBtn" href="#" target="_blank">LinkedIn</a>
+      <a class="btn" id="ghBtn" href="#" target="_blank">GitHub</a>
+    </div>
+  </div>
+</div></section>
+
+<footer>© <span id="yr"></span> Poorni Pathirage</footer>
+
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<div id="toast"></div>
+
+<script>
+/* ==========================================================
+   EDIT YOUR DETAILS HERE — text, links and photo file names.
+   Put photos in the images/ folder with these exact names.
+   ========================================================== */
+const ME = {
+  email: "poorni.pathirage@gmail.com",
+  linkedin: "https://www.linkedin.com/in/poornipathirage",
+  github: "https://github.com/poorniGimasha2003",
+};
+
+const PROJECTS = [
+  { id:"pruning", type:"Research", date:"Oct 2026 – Present",
+    title:"Structural Pruning of Neural Networks",
+    short:"Evaluating DepGraph and Torch-Pruning across CNN, RNN, Transformer and graph architectures.",
+    photos:["images/projects/pruning-1.jpg","images/projects/pruning-2.jpg"],
+    points:["Studying which architectures DepGraph supports, and where it fails.",
+            "Building an automated PyTorch test harness that logs success, crashes and silent output errors.",
+            "Aiming to add pruning support for LSTM/GRU layers and contribute it to Torch-Pruning.",
+            "Planning fair comparisons on accuracy, model size and inference latency."],
+    tech:["Python","PyTorch","Torch-Pruning","torchvision","Hugging Face","PyTorch Geometric"],
+    link:"https://github.com/poorniGimasha2003/structural-pruning-depgraph.git" },
+  { id:"bedsense", type:"IoT", date:"Jan 2026 – Present",
+    title:"BedSense",
+    short:"A hardware and software system to help detect pressure risks for bedridden patients. I mainly worked on the software and dashboard.",
+    photos:[["images/projects/bedsense-dashboard-1.jpg","Monitoring dashboard"],
+            ["images/projects/bedsense-1.jpg","Sensor mattress prototype"],
+            ["images/projects/bedsense-dashboard-2.jpg","Pressure trends per sensor cell"],
+            ["images/projects/bedsense-dashboard-3.jpg","Role-based sign-in"],
+            ["images/awards/biofusion-2.jpg","Presenting BedSense at BioFusion 2026"]],
+    points:["A team project at Synexis combining a sensor mattress (hardware) with a monitoring app (software).",
+            "My part: the software side, including the software architecture, database and the monitoring dashboard.",
+            "The dashboard receives sensor data from the ESP32 over MQTT and shows it to caregivers.",
+            "<b>Next step (planned):</b> a prediction model that learns from the sensor data to flag risk earlier. I plan to work on the ML and software parts of this."],
+    tech:["ESP32","MQTT","Node.js","React","SQLite"],
+    link:null },
+  { id:"smartpaw", type:"IoT", date:"Sep 2026",
+    title:"Smart Paw — Smart Pet Feeder",
+    short:"A low-cost automatic pet feeder that identifies the pet by RFID and measures each portion by weight.",
+    photos:[["images/projects/smartpaw-1.jpg","Working prototype"],
+            ["images/projects/smartpaw-2.jpg","3D CAD model of the enclosure"],
+            ["images/projects/smartpaw-3.jpg","CAD: inside view of the hopper"],
+            ["images/projects/smartpaw-4.jpg","Concept render"],
+            "images/projects/smartpaw-5.jpg"],
+    points:["Group project for the CO3302 Computer Engineering Project module.",
+            "Releases food only when the right pet's RFID tag is detected at the scheduled time.",
+            "Uses a load cell to dispense a set weight of food, with automatic jam clearing.",
+            "Schedule and portion size are set on the device with a keypad and LCD."],
+    tech:["ESP32","C++","RFID","Load cell","Servo motors"],
+    link:null },
+  { id:"ecom", type:"Data / ML", date:"Jul 2026",
+    title:"E-Commerce ML Pipeline",
+    short:"An end-to-end pipeline on ~780,000 retail transactions, from cleaning to a Streamlit dashboard.",
+    photos:[["images/projects/ecom-1.jpg","Streamlit dashboard: customer segments"],
+            ["images/projects/ecom-2.jpg","Top 10 products by PageRank"],
+            ["images/projects/ecom-3.jpg","Frequently bought together (Apriori)"]],
+    points:["Cleaned and explored the UCI Online Retail II dataset.",
+            "Grouped customers with RFM analysis and clustering; built a churn model with a time-based split.",
+            "Used Apriori market-basket analysis and a PageRank co-purchase network to find influential products.",
+            "Presented everything in an interactive Streamlit dashboard."],
+    tech:["Python","pandas","scikit-learn","mlxtend","NetworkX","Streamlit"],
+    link:"https://github.com/poorniGimasha2003/retail-customer-intelligence.git" },
+];
+
+const AWARDS = [
+  { id:"hult", group:"BedSense", result:"Top 6", top:true, year:"2026",
+    title:"Hult Prize Sri Lanka Nationals", org:"APIIT, with the Ministry of Digital Economy",
+    text:"Our BedSense team was selected among the top 6 teams at the national round of the Hult Prize, a student social-entrepreneurship competition.",
+    photos:[["images/awards/hult-1.jpg","Team BedSense at Hult Prize Sri Lanka Nationals 2025/26"],
+            ["images/awards/hult-2.jpg","BedSense on stage at the Nationals"]] },
+  { id:"brainstorm", group:"BedSense", result:"1st Runner-Up", top:true, year:"2026",
+    title:"Brainstorm 2026", org:"IEEE EMBS Student Chapter, University of Moratuwa",
+    text:"A national healthcare and biomedical engineering innovation competition. Our team placed 1st runner-up with BedSense.",
+    photos:[["images/awards/brainstorm-1.jpg","Team BedSense after placing 1st runner-up"],
+            ["images/awards/brainstorm-2.jpg","Presenting BedSense at Brainstorm 2026"],
+            ["images/awards/brainstorm-3.jpg","Team BedSense on stage with the award"]] },
+  { id:"sliot", group:"BedSense", result:"Finalist", top:false, year:"2026",
+    title:"SLIoT Challenge 2026", org:"University of Moratuwa, SLT-Mobitel & IESL",
+    text:"A national IoT/AIoT competition themed around Industry 5.0. BedSense reached the finals.",
+    photos:[["images/awards/sliot-1.jpg","Team BedSense at the SLIoT Challenge 2026 finals"],
+            ["images/awards/sliot-2.jpg","With the BedSense sensor mattress prototype"]] },
+  { id:"biofusion", group:"BedSense", result:"Exhibited", top:false, year:"2026",
+    title:"BioFusion Research Exhibition", org:"IEEE EMBS Student Chapter, University of Sri Jayewardenepura",
+    text:"Our team exhibited BedSense at BioFusion and presented it to investors and industry judges.",
+    photos:[["images/awards/biofusion-1.jpg","BioFusion Exhibition, organized by the IEEE EMBS Student Chapter, USJ"],
+            ["images/awards/biofusion-2.jpg","Pitching BedSense to investors and industry judges"]] },
+  { id:"vertex", group:"Other", result:"Champions", top:true, year:"2025",
+    title:"VERTEX 2025 Innovation Challenge", org:"IEEE RAS Student Chapter, IIT",
+    text:"Our team won the first edition of this national IoT and robotics innovation challenge.",
+    photos:[["images/awards/vertex-1.jpg","VERTEX 2025 winners"]] },
+];
+
+const SKILLS = [
+  { name:"Deep learning", items:["PyTorch","Torch-Pruning","torchvision","Hugging Face","PyTorch Geometric","CNNs","Transformers","GNNs"] },
+  { name:"Data & ML", items:["pandas","scikit-learn","mlxtend","NetworkX","NLP"] },
+  { name:"Embedded & cloud", items:["AWS","ESP32","MQTT","IoT","Sensors"] },
+  { name:"Languages & tools", items:["Python","C++","Java","Git","Jupyter","Streamlit","Flutter","Figma","React","Node.js","SQLite"] },
+];
+/* ========================================================== */
+
+const $ = s => document.querySelector(s);
+const GH = `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>`;
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// photo with placeholder fallback
+function ph(src, hint = "Add photo") {
+  if (Array.isArray(src)) src = src[0];
+  return `<div class="ph empty" data-src="${src}"><img src="${src}" alt="" onload="this.parentNode.classList.remove('empty')" onerror="this.remove()"><span class="hint">${hint}<code>${src}</code></span></div>`;
+}
+document.querySelectorAll(".ph[data-hint]").forEach(el => el.outerHTML = ph(el.dataset.src, el.dataset.hint));
+
+// links, toast, copy email
+$("#mailBtn").href = "mailto:" + ME.email; $("#liBtn").href = ME.linkedin; $("#ghBtn").href = ME.github;
+$("#yr").textContent = new Date().getFullYear();
+function toast(t) { const el = $("#toast"); el.textContent = t; el.classList.add("show"); setTimeout(() => el.classList.remove("show"), 1800); }
+$("#copyMail").onclick = () => navigator.clipboard.writeText(ME.email).then(() => toast("Email copied: " + ME.email), () => location.href = "mailto:" + ME.email);
+
+// nav
+$("#burger").onclick = () => $("#links").classList.toggle("open");
+document.querySelectorAll("#links a").forEach(a => a.addEventListener("click", () => $("#links").classList.remove("open")));
+addEventListener("scroll", () => {
+  $("#nav").classList.toggle("sc", scrollY > 10);
+  let cur = ""; document.querySelectorAll("section[id]").forEach(s => { if (s.getBoundingClientRect().top < 140) cur = s.id; });
+  document.querySelectorAll("#links a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + cur));
+});
+
+// filters helper
+function filters(box, cats, onPick) {
+  box.innerHTML = cats.map((c, i) => `<button class="${i ? "" : "on"}">${c}</button>`).join("");
+  box.querySelectorAll("button").forEach(b => b.onclick = () => {
+    box.querySelectorAll("button").forEach(x => x.classList.remove("on")); b.classList.add("on"); onPick(b.textContent);
+  });
+}
+
+// projects
+$("#pGrid").innerHTML = PROJECTS.map(p => `
+  <div role="button" tabindex="0" class="pcard card fade" data-id="${p.id}" data-cat="${p.type}">
+    ${ph(p.photos[0], "Project photo")}
+    <div class="body"><span class="tag">${p.type}</span> <span class="small">${p.date}</span>
+      <h3>${p.title}</h3><p>${p.short}</p><div class="pfoot"><span class="more">View details →</span>${p.link ? `<a class="gh" href="${p.link}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${GH} GitHub</a>` : ""}</div></div>
+  </div>`).join("");
+filters($("#pFilters"), ["All", ...new Set(PROJECTS.map(p => p.type))], c =>
+  document.querySelectorAll(".pcard").forEach(el => el.classList.toggle("hide", c !== "All" && el.dataset.cat !== c)));
+document.querySelectorAll(".pcard").forEach(el => el.onkeydown = e => { if (e.key === "Enter") el.click(); });
+document.querySelectorAll(".pcard").forEach(el => el.onclick = () => {
+  const p = PROJECTS.find(x => x.id === el.dataset.id);
+  openModal(p.photos, `<span class="tag">${p.type}</span> <span class="small">${p.date}</span><h3>${p.title}</h3>
+    <ul>${p.points.map(x => `<li>${x}</li>`).join("")}</ul>
+    <div style="margin-top:16px">${p.tech.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+    ${p.link ? `<a class="btn solid" style="margin-top:18px" href="${p.link}" target="_blank" rel="noopener">${GH} View code on GitHub</a>` : ""}`);
+});
+
+// awards
+$("#aGrid").innerHTML = AWARDS.map(a => `
+  <button class="acard card fade" data-id="${a.id}" data-cat="${a.group}">
+    <div style="position:relative">${ph(a.photos[0], "Award photo")}<span class="count" data-aid="${a.id}">${a.photos.length} photos</span></div>
+    <div class="body"><span class="res ${a.top ? "top" : ""}">${a.result}</span>
+      <h3>${a.title}</h3><small>${a.org} · ${a.year}</small></div>
+  </button>`).join("");
+filters($("#aFilters"), ["All", "BedSense", "Other"], c =>
+  document.querySelectorAll(".acard").forEach(el => el.classList.toggle("hide", c !== "All" && el.dataset.cat !== c)));
+document.querySelectorAll(".acard").forEach(el => el.onclick = () => {
+  const a = AWARDS.find(x => x.id === el.dataset.id);
+  openModal(a.photos, `<span class="res ${a.top ? "top" : ""}" style="font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:6px;background:${a.top ? "var(--clay-l)" : "var(--green-l)"};color:${a.top ? "var(--clay)" : "var(--green)"}">${a.result}</span>
+    <h3>${a.title}</h3><p class="small" style="margin-bottom:10px">${a.org} · ${a.year}${a.group === "BedSense" ? " · with Team BedSense" : ""}</p><p>${a.text}</p>`);
+});
+
+// hide photo slots whose file doesn't exist yet
+const srcOf = p => Array.isArray(p) ? p[0] : p;
+const missing = new Set();
+[...PROJECTS, ...AWARDS].forEach(item => item.photos.forEach(p => {
+  const im = new Image();
+  im.onerror = () => { missing.add(srcOf(p)); updateCounts(); };
+  im.src = srcOf(p);
+}));
+function updateCounts() {
+  document.querySelectorAll(".count[data-aid]").forEach(el => {
+    const a = AWARDS.find(x => x.id === el.dataset.aid);
+    const n = a.photos.filter(p => !missing.has(srcOf(p))).length;
+    el.textContent = n === 1 ? "1 photo" : n + " photos"; el.style.display = n ? "" : "none";
+  });
+}
+
+// modal with photo carousel
+let photos = [], idx = 0;
+function openModal(list, html) {
+  const avail = list.filter(p => !missing.has(srcOf(p)));
+  photos = avail.length ? avail : list; list = photos; idx = 0;
+  $("#mbox").innerHTML = `<button class="mclose" aria-label="Close">×</button>
+    <div class="slides"><div id="slide"></div><div id="cap" class="cap"></div>
+      ${list.length > 1 ? `<button class="nav-btn l" aria-label="Previous">‹</button><button class="nav-btn r" aria-label="Next">›</button>` : ""}</div>
+    ${list.length > 1 ? `<div class="thumbs">${list.map((s, i) => `<div data-i="${i}">${ph(s)}</div>`).join("")}</div>` : ""}
+    <div class="mbody">${html}</div>`;
+  $("#mbox .mclose").onclick = closeModal;
+  $("#mbox .l") && ($("#mbox .l").onclick = () => show(idx - 1));
+  $("#mbox .r") && ($("#mbox .r").onclick = () => show(idx + 1));
+  document.querySelectorAll(".thumbs [data-i]").forEach(t => t.onclick = () => show(+t.dataset.i));
+  show(0); $("#modal").classList.add("open"); document.body.style.overflow = "hidden";
+}
+function show(i) {
+  idx = (i + photos.length) % photos.length;
+  $("#slide").innerHTML = ph(photos[idx], `Photo ${idx + 1} of ${photos.length}`);
+  const c = Array.isArray(photos[idx]) ? photos[idx][1] : "";
+  $("#cap").textContent = c; $("#cap").style.display = c ? "block" : "none";
+  document.querySelectorAll(".thumbs .ph").forEach((t, k) => t.classList.toggle("on", k === idx));
+}
+function closeModal() { $("#modal").classList.remove("open"); document.body.style.overflow = ""; }
+$("#modal").onclick = e => { if (e.target.id === "modal") closeModal(); };
+addEventListener("keydown", e => {
+  if (!$("#modal").classList.contains("open")) return;
+  if (e.key === "Escape") closeModal(); if (e.key === "ArrowRight") show(idx + 1); if (e.key === "ArrowLeft") show(idx - 1);
+});
+
+// fade-in on scroll
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll(".fade").forEach(el => io.observe(el));
+
+// HiDPI canvas helper
+function fit(cv) {
+  const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
+  cv.width = r.width * d; cv.height = r.height * d;
+  const ctx = cv.getContext("2d"); ctx.setTransform(d, 0, 0, d, 0, 0); return { ctx, w: r.width, h: r.height };
+}
+
+/* ---------- skill sphere ---------- */
+(() => {
+  const box = $("#sGroups");
+  box.innerHTML = SKILLS.map((g, i) => `<div class="sgroup card" data-g="${i}"><h4>${g.name}</h4>${g.items.map(t => `<span class="chip" data-t="${t}">${t}</span>`).join("")}</div>`).join("");
+  const cv = $("#orbit"); let G = fit(cv); addEventListener("resize", () => G = fit(cv));
+  const tags = SKILLS.flatMap((g, gi) => g.items.map(t => ({ t, gi })));
+  tags.forEach((p, i) => { const phi = Math.acos(-1 + 2 * (i + .5) / tags.length), th = Math.sqrt(tags.length * Math.PI) * phi;
+    p.x = Math.cos(th) * Math.sin(phi); p.y = Math.sin(th) * Math.sin(phi); p.z = Math.cos(phi); });
+  let ax = .002, ay = .004, drag = null, moved = 0, active = null;
+  const groupColors = ["#2f6b55", "#c46a3f", "#3c6e91", "#7a5c8e"];
+
+  function setActive(g, word) {
+    active = g;
+    document.querySelectorAll(".sgroup").forEach(el => el.classList.toggle("on", +el.dataset.g === g));
+    document.querySelectorAll(".chip").forEach(c => c.classList.toggle("hl", c.dataset.t === word));
+  }
+  document.querySelectorAll(".sgroup").forEach(el => el.onclick = () => setActive(active === +el.dataset.g ? null : +el.dataset.g, null));
+
+  cv.addEventListener("pointerdown", e => { drag = [e.clientX, e.clientY]; moved = 0; cv.setPointerCapture(e.pointerId); });
+  cv.addEventListener("pointermove", e => { if (!drag) return; const dx = e.clientX - drag[0], dy = e.clientY - drag[1]; moved += Math.abs(dx) + Math.abs(dy); ay = dx * .006; ax = dy * .006; drag = [e.clientX, e.clientY]; });
+  cv.addEventListener("pointerup", e => {
+    drag = null; if (moved > 6) return;
+    const r = cv.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top;
+    const hit = tags.filter(p => p.z > -.2 && Math.abs(p.sx - mx) < p.tw / 2 + 4 && Math.abs(p.sy - my) < 12).sort((a, b) => b.z - a.z)[0];
+    if (hit) setActive(hit.gi, hit.t); else setActive(null, null);
+  });
+
+  let on = false; new IntersectionObserver(([e]) => on = e.isIntersecting).observe(cv);
+  const mix = (c1, c2, t) => { const h = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16)); const A = h(c1), B = h(c2);
+    return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * t)).join(",")})`; };
+  function pill(ctx, x, y, w, h) { const r = h / 2; ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+  (function loop() {
+    requestAnimationFrame(loop); if (!on) return;
+    const { ctx, w, h } = G, Rx = w / 2 - 62, Ry = h / 2 - 26; ctx.clearRect(0, 0, w, h);
+    const c1 = Math.cos(ax), s1 = Math.sin(ax), c2 = Math.cos(ay), s2 = Math.sin(ay);
+    tags.forEach(p => { let y = p.y * c1 - p.z * s1, z = p.y * s1 + p.z * c1; p.y = y; p.z = z; const x = p.x * c2 + p.z * s2; p.z = -p.x * s2 + p.z * c2; p.x = x; });
+    if (!drag) { const tx = reduce ? 0 : .0015, ty = reduce ? 0 : .003; ax += (tx - ax) * .04; ay += (ty - ay) * .04; }
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    [...tags].sort((a, b) => a.z - b.z).forEach(p => {
+      const depth = (p.z + 1) / 2;                 // 0 = back, 1 = front
+      const size = 12 + depth * 4;
+      ctx.font = `500 ${size}px "DM Sans", sans-serif`;
+      const tw = ctx.measureText(p.t).width + 20, th = size + 12;
+      p.tw = tw;
+      p.sx = Math.max(tw / 2 + 2, Math.min(w - tw / 2 - 2, w / 2 + p.x * Rx));
+      p.sy = Math.max(th / 2 + 2, Math.min(h - th / 2 - 2, h / 2 + p.y * Ry));
+      const sel = active !== null && active === p.gi, dim = active !== null && !sel;
+      const fade = dim ? .75 : (1 - depth) * .6;    // how much to blend into the background
+      const bg = sel ? groupColors[p.gi] : "#fffdf9";
+      ctx.fillStyle = sel ? mix(groupColors[p.gi], "#efe8dc", (1 - depth) * .4) : mix("#fffdf9", "#efe8dc", fade);
+      pill(ctx, p.sx - tw / 2, p.sy - th / 2, tw, th); ctx.fill();
+      ctx.strokeStyle = sel ? "transparent" : mix("#d8cdb9", "#efe8dc", fade); ctx.stroke();
+      ctx.fillStyle = sel ? "#ffffff" : mix("#24333a", "#efe8dc", fade);
+      ctx.fillText(p.t, p.sx, p.sy + 1);
+    });
+  })();
+})();
+</script>
+</body>
+</html>
